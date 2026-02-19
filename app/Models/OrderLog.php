@@ -12,7 +12,7 @@ class OrderLog extends Model
         'order_id',
         'old_status',
         'new_status',
-        'change_by'
+        'changed_by'
     ];
 
     public function order(): BelongsTo
@@ -25,7 +25,7 @@ class OrderLog extends Model
     public function changeBy(): BelongsTo
     {
 
-        return $this->belongsTo(User::class, 'change_by');
+        return $this->belongsTo(User::class, 'changed_by', 'id');
 
     }
 }

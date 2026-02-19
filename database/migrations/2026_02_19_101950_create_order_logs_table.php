@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained();
             $table->string('old_status');
             $table->string('new_status');
-            $table->foreignId('change_by')->constrained('users');
+            $table->foreignId('changed_by')->constrained('users');
             $table->timestamps();
         });
     }
