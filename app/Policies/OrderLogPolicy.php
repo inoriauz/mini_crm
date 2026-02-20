@@ -13,7 +13,7 @@ class OrderLogPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->isAdmin();
     }
 
     /**
@@ -21,7 +21,7 @@ class OrderLogPolicy
      */
     public function view(User $user, OrderLog $orderLog): bool
     {
-        return $user->role === 'admin';
+        return $user->isAdmin();
     }
 
     /**
@@ -29,7 +29,7 @@ class OrderLogPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->isAdmin();
     }
 
     /**
@@ -37,7 +37,7 @@ class OrderLogPolicy
      */
     public function update(User $user, OrderLog $orderLog): bool
     {
-        return $user->role === 'admin';
+        return $user->isAdmin();
     }
 
     /**
@@ -45,7 +45,7 @@ class OrderLogPolicy
      */
     public function delete(User $user, OrderLog $orderLog): bool
     {
-        return $user->role === 'admin';
+        return $user->isAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class OrderLogPolicy
      */
     public function restore(User $user, OrderLog $orderLog): bool
     {
-        return $user->role === 'admin';
+        return $user->isAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class OrderLogPolicy
      */
     public function forceDelete(User $user, OrderLog $orderLog): bool
     {
-        return $user->role === 'admin';
+        return $user->isAdmin();
     }
 }
