@@ -24,8 +24,20 @@ class UserSeeder extends Seeder
 
         // fake user created with role manager
         User::query()->create([
-            'name' => 'Manager',
+            'name' => 'Manager 1',
             'email' => 'manager@gmail.com',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::query()->create([
+            'name' => 'Manager 2',
+            'email' => 'manager2@gmail.com',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::query()->create([
+            'name' => 'Manager 3',
+            'email' => 'manager3@gmail.com',
             'password' => Hash::make('password123'),
         ]);
 
