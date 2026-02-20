@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrderResource extends Resource
 {
@@ -37,7 +38,22 @@ class OrderResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return OrdersTable::configure($table);
+        $table = OrdersTable::configure($table);
+        
+        return $table->modifyQueryUsing(function (Builder $query): Builder {
+            $user = auth()->user();
+
+
+            if ($user->role == 'admin') {
+
+                return $query;
+
+            }
+
+
+            return $query->where('manager_id', $user->id);
+
+        });
     }
 
     public static function getRelations(): array
