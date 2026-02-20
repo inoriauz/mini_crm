@@ -20,7 +20,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            $this->errorResponse('Invalid credentials', 401);
+            return $this->errorResponse('Invalid credentials', 401);
         }
 
         $user->tokens()->delete();
@@ -39,7 +39,15 @@ class AuthController extends Controller
 
         $request->user()->tokens()->delete();
 
-        return $this->successResponse([], 'Logged out successfully', 204);
+        return $this->successResponse([], 'Logged out successfully');
+
+    }
+
+
+    public function user()
+    {
+
+        return $this->successResponse(UserResource::make(auth()->user()), 'User retrieved successfully');
 
     }
 }
