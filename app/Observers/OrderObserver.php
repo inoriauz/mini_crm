@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\NewOrderCreatedJob;
 use App\Models\Order;
 use App\Models\OrderLog;
 
@@ -12,7 +13,7 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        //
+        NewOrderCreatedJob::dispatch($order->id);
     }
 
     /**

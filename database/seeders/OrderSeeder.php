@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Client;
-use App\Models\Order;
-use App\Models\OrderLog;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Client;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class OrderSeeder extends Seeder
 {
+    use withoutModelEvents;
     /**
      * Run the database seeds.
      */
@@ -19,25 +19,25 @@ class OrderSeeder extends Seeder
         $clients = Client::all();
         $managers = User::all();
 
+        if ($clients->isEmpty() || $managers->isEmpty()) {
+            return;
+        }
+
         $clients->each(function ($client) use ($managers) {
 
-            $orders = Order::factory()->count(3)->create([
-                'client_id' => $client->id,
-                'manager_id' => $managers->random()->id,
-            ]);
+            $order = Order::factory()
+                ->count(3)
+                ->create([
+                    'client_id' => $client->id,
+                    'manager_id' => $managers->random()->id,
+                ])
+                ->each(function ($order) {
 
-            $orders->each(function ($order) {
-                $oldStatus = $order->status;
+                    $order->update([
+                        'status' => 'in_progress'
+                    ]);
 
-                $order->update(['status' => 'in_progress']);
-
-                OrderLog::create([
-                    'order_id' => $order->id,
-                    'old_status' => $oldStatus,
-                    'new_status' => 'in_progress',
-                    'changed_by' => $order->manager_id,
-                ]);
-            });
+                });
 
         });
     }
